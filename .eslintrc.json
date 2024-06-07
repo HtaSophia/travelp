@@ -1,5 +1,6 @@
 {
     "env": {
+        "node": true,
         "browser": true,
         "es2022": true
     },
@@ -19,5 +20,7 @@
         "react",
         "react-hooks"
     ],
-    "rules": {}
+    "rules": {
+        "no-unused-vars": "warn"
+    }
 }

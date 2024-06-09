@@ -1,16 +1,32 @@
-import React from 'react';
 import './App.css';
-import Navbar from './components/Navbar/Navbar';
-import Footer from './components/Footer/Footer';
-import Button from './components/shared/Button/Button';
+import React, { useContext } from 'react';
+import { Routes, Route, Navigate } from "react-router-dom";
+import { AuthContext } from './auth/AuthContext.js';
+
+import Navbar from './components/Navbar/Navbar.js';
 
 function App() {
-  return (<>
-  <Navbar username='name'/>
-  <Footer/>
-  <Button text='button'/>
-  
-  </>);
+  const { currentUser } = useContext(AuthContext);
+
+  const ProtectedRoute = ({ children }) => {
+    if (!currentUser) return <Navigate to="/login" />
+    return children;
+  }
+
+  return (
+    <Routes>
+      <Route path='/' index element={
+        <ProtectedRoute>
+          <Navbar />
+          {/* travels, travel details and create travel pages here */}
+          {/* Footer here */}
+        </ProtectedRoute>
+      }></Route>
+      {/* <Route path='register' element={<Register />}></Route> */}
+      <Route path='login' element={<h1>Login</h1>}></Route>
+      <Route path='*' element={<Navigate to={'/'} />}></Route>
+    </Routes>
+  )
 }
 
 export default App;

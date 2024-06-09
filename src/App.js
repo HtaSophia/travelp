@@ -4,6 +4,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import { AuthContext } from './auth/AuthContext.js';
 
 import Navbar from './components/Navbar/Navbar.js';
+import Footer from './components/Footer/Footer.js';
 
 function App() {
   const { currentUser } = useContext(AuthContext);
@@ -19,7 +20,7 @@ function App() {
         <ProtectedRoute>
           <Navbar username={currentUser?.username} />
           {/* travels, travel details and create travel pages here */}
-          {/* Footer here */}
+          <Footer />
         </ProtectedRoute>
       }></Route>
       {/* <Route path='register' element={<Register />}></Route> */}

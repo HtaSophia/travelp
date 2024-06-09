@@ -1,11 +1,17 @@
 import React from "react";
 import './Singin.css';
+import logo from '../../assets/images/Logo.svg';
+import signup from '../../assets/images/signup.jpg';
 import Button from '../shared/Button/Button';
 
 export default function Singin() {
     return (
         
-        <form method="post">
+        
+        <div className="cotainer">
+            
+        <form  className="form" method="post">
+            <img src={logo}></img>
             <div className="email">
             <input type="text"></input>
             <label>Your email</label>
@@ -24,6 +30,8 @@ export default function Singin() {
             </div>
 
         </form>
+
+        </div>
     )
 }
         

@@ -1,12 +1,18 @@
 .navbar-collapse {
-    flex: none !important;
-    
-    
-    
+  flex: none !important;
+}
+
+.user-image img {
+  border-radius: 50%;
+}
+
+.dropdown-toggle {
+  display: flex !important;
+  align-items: center;
+  column-gap: 0.5rem;
 }
 
 .container-fluid {
-    margin-left: 2.5rem !important;
-    margin-right: 4rem !important;
+  margin-left: 2.5rem !important;
+  margin-right: 4rem !important;
 }
-

@@ -1,7 +1,7 @@
 import { useContext } from "react";
-import { AuthContext } from "./auth/AuthContext";
+import { AuthContext } from "../auth/AuthContext";
 import { auth, db } from "./firebase-config";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { collection, doc, getDocs, query, serverTimestamp, setDoc, updateDoc, where } from "firebase/firestore";
 import { v5 as uuid } from 'uuid';
 
@@ -30,9 +30,9 @@ export function useFirebase() {
         return signInWithEmailAndPassword(auth, email, password);
     }
 
-    async function userLogout(email, password) {
+    async function userLogout() {
         try {
-            return signInWithEmailAndPassword(auth, email, password);
+            await signOut(auth);
         } catch (error) {
             throw new Error(error.message);
         }

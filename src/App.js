@@ -18,7 +18,7 @@ function App() {
     <Routes>
       <Route path='/' index element={
         <ProtectedRoute>
-          <Navbar name={currentUser.username} />
+          <Navbar username={currentUser?.username} />
           {/* travels, travel details and create travel pages here */}
           <Footer />
         </ProtectedRoute>

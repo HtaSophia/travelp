@@ -12,12 +12,12 @@ export default function Singin() {
             
         <form  className="form" method="post">
             <img src={logo}></img>
-            <div className="email">
+            <div className="input">
             <input type="text"></input>
             <label>Your email</label>
             </div>
 
-            <div className="password">
+            <div className="inputgi">
             <input type="password"></input>
             <label>Your password</label>
             </div>

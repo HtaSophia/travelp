@@ -11,16 +11,18 @@ export default function Singin() {
         <div className="cotainer">
             
         <form  className="form" method="post">
-            <img src={logo}></img>
+            <img className="logo" src={logo}></img>
 
             <div className="input">
-            <input type="text"></input>
             <label>Your email</label>
+            <input type="text"></input>
+            
             </div>
 
             <div className="input">
-            <input type="password"></input>
             <label>Your password</label>
+            <input type="password"></input>
+            
             </div>
 
             <Button className="button" text="Login" color="#2D527C" onClick={() => console.log('Form submitted')} />

@@ -5,6 +5,7 @@ import { AuthContext } from './auth/AuthContext.js';
 
 import Navbar from './components/Navbar/Navbar.js';
 import Badge from './components/shared/Badge/Badge.js';
+import Footer from './components/Footer/Footer.js';
 
 function App() {
   const { currentUser } = useContext(AuthContext);
@@ -18,7 +19,7 @@ function App() {
     <Routes>
       <Route path='/' index element={
         <ProtectedRoute>
-          <Navbar />
+          <Navbar username={currentUser?.username} />
           {/* travels, travel details and create travel pages here */}
           <Footer />
         </ProtectedRoute>

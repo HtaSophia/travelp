@@ -28,3 +28,12 @@ strong {
   font-weight: 600;
   font-style: normal;
 }
+
+.btn-primary-custom {
+  background-color: var(--primary-color) !important;
+  color: white !important;
+
+  &:hover {
+    opacity: 0.9;
+  }
+}

@@ -26,7 +26,7 @@ function App() {
         </ProtectedRoute>
       }></Route>
       {/* <Route path='register' element={<Register />}></Route> */}
-      <Route path='login' element={<Badge icon='person-lines-fill'/>}></Route>
+      <Route path='login' element={<h1>Login</h1>}></Route>
       <Route path='*' element={<Navigate to={'/'} />}></Route>
     </Routes>
   )

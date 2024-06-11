@@ -7,6 +7,7 @@ import Navbar from './components/Navbar/Navbar.js';
 import Badge from './components/shared/Badge/Badge.js';
 import Footer from './components/Footer/Footer.js';
 
+
 function App() {
   const { currentUser } = useContext(AuthContext);
 
@@ -25,7 +26,7 @@ function App() {
         </ProtectedRoute>
       }></Route>
       {/* <Route path='register' element={<Register />}></Route> */}
-      <Route path='login' element={<h1>Login</h1>}></Route>
+      <Route path='login' element={<Badge icon='person-lines-fill'/>}></Route>
       <Route path='*' element={<Navigate to={'/'} />}></Route>
     </Routes>
   )

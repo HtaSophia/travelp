@@ -1,22 +1,22 @@
 import React from 'react';
 import './Badge.css';
 import PropTypes from 'prop-types';
-import { Tooltip, OverlayTrigger } from 'react-bootstrap';
+;
 
- function Badge(props) {}
 
-    const Badge = ({ tooltipText, iconName, colorHex }) => {
-        
-        const IconComponent = Icons[iconName];
-      
-        const renderTooltip = (props) => (
-          <Tooltip id="badge-tooltip" {...props}>
-            {tooltipText}
-          </Tooltip>
-    );
+function Badge(props) {
+    const { tooltipText = '', color = 'primary', icon } = props;
 
     return (
-        <div>Navbar</div>
+
+        <span className={` badge text-bg-${color}`} >
+            {icon && <i className={`bi bi-${icon}`}></i>}
+            <span className="tooltiptext">{tooltipText}</span>
+        </span>
+
+
+
+
     )
 };
 

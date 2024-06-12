@@ -1,3 +1,4 @@
-import Button from './Button';
+import Button from './Button.js';
+import Badge from './Badge.js';
 
-export { Button };
+export { Button, Badge };

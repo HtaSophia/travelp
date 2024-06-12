@@ -4,8 +4,10 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import { AuthContext } from './auth/AuthContext.js';
 
 import Navbar from './components/Navbar/Navbar.js';
+import Badge from './components/shared/Badge/Badge.js';
 import Footer from './components/Footer/Footer.js';
 import Singin from './components/Singin/Singin.js';
+
 
 function App() {
   const { currentUser } = useContext(AuthContext);

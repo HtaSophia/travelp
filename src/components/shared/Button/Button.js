@@ -5,15 +5,15 @@ Button.propTypes = {
     text: PropTypes.string,
     color: PropTypes.string,
     icon: PropTypes.string,
-    onClick: PropTypes.func.isRequired,
+    onClick: PropTypes.func,
 }
 
 function Button(props) {
-    const { text = '', color = 'primary-custom', icon, onClick } = props;
+    const { text = '', type = 'button', color = 'primary-custom', icon, onClick = () => { } } = props;
 
     return (
         <button
-            type='button'
+            type={type}
             className={`btn btn-${color}`}
             onClick={onClick}
         >

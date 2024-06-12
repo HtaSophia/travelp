@@ -1,5 +1,6 @@
-import React, { useState } from "react";
 import './Singin.css';
+import React, { useState } from "react";
+import { NavLink } from "react-router-dom";
 import logo from '../../assets/images/Logo.svg';
 import Button from '../shared/Button/Button';
 
@@ -13,30 +14,50 @@ export default function Singin() {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        alert(formData);
+        console.log(formData)
     }
 
     return (
         <div className="auth-container">
-            <div className="sign-in-container">
-                <img className="logo" src={logo} alt="TravelP logo with the Travel as blue text and P as green text"></img>
+            <div className="sign-in-container text-center">
+                <img className="logo mb-5" src={logo} alt="TravelP logo with the Travel as blue text and P as green text"></img>
 
-                <form className="form" onSubmit={handleSubmit}>
-                    <div className="input">
-                        <label>Your email</label>
-                        <input type="email" id="email" name="email" value={formData.name} onChange={handleChange} autoComplete="username" />
+                <form className="form text-start" onSubmit={handleSubmit}>
+                    <div className="mb-3">
+                        <label className="form-label">Your email</label>
+                        <input
+                            className="form-control"
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="name@example.com"
+                            value={formData.name}
+                            onChange={handleChange}
+                            autoComplete="username"
+                            required
+                        />
                     </div>
 
-                    <div className="input">
-                        <label>Your password</label>
-                        <input type="password" id="password" name="password" value={formData.name} onChange={handleChange} autoComplete="current-password" />
+                    <div className="mb-4">
+                        <label className="form-label">Your password</label>
+                        <input
+                            className="form-control"
+                            type="password"
+                            id="password"
+                            name="password"
+                            value={formData.name}
+                            onChange={handleChange}
+                            autoComplete="current-password"
+                            required
+                        />
                     </div>
 
                     <Button text="Login" type="submit" />
                 </form>
 
-                <div className="register">
-                    <p>Dont have an account?<a href="#">Register</a></p>
+                <div className="register mt-4">
+                    <span>Do not have an account?</span>
+                    <NavLink className="navbar-brand" to="/register">Register</NavLink>
                 </div>
             </div>
         </div>

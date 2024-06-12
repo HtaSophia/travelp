@@ -7,6 +7,12 @@
   --subtext-color: #818181;
 }
 
+html,
+body,
+#root {
+  height: 100%;
+}
+
 body {
   margin: 0;
   color: var(--text-color);
@@ -27,6 +33,15 @@ strong {
   font-family: "Poppins", sans-serif;
   font-weight: 600;
   font-style: normal;
+}
+
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  background: url('./assets/images/signup.jpg') no-repeat center center fixed;
+  background-size: cover;
 }
 
 .btn-primary-custom {

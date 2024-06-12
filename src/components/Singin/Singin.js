@@ -1,40 +1,44 @@
-import React from "react";
+import React, { useState } from "react";
 import './Singin.css';
 import logo from '../../assets/images/Logo.svg';
-import signup from '../../assets/images/signup.jpg';
 import Button from '../shared/Button/Button';
 
 export default function Singin() {
+    const [formData, setFormData] = useState({ email: "", password: "" });
+
+    const handleChange = (event) => {
+        const { name, value } = event.target;
+        setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
+    };
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        alert(formData);
+    }
+
     return (
-        
-        
-        <div className="cotainer">
-            
-        <form  className="form" method="post">
-            <img className="logo" src={logo}></img>
+        <div className="auth-container">
+            <div className="sign-in-container">
+                <img className="logo" src={logo} alt="TravelP logo with the Travel as blue text and P as green text"></img>
 
-            <div className="input">
-            <label>Your email</label>
-            <input type="text"></input>
-            
+                <form className="form" onSubmit={handleSubmit}>
+                    <div className="input">
+                        <label>Your email</label>
+                        <input type="email" id="email" name="email" value={formData.name} onChange={handleChange} autoComplete="username" />
+                    </div>
+
+                    <div className="input">
+                        <label>Your password</label>
+                        <input type="password" id="password" name="password" value={formData.name} onChange={handleChange} autoComplete="current-password" />
+                    </div>
+
+                    <Button text="Login" type="submit" />
+                </form>
+
+                <div className="register">
+                    <p>Dont have an account?<a href="#">Register</a></p>
+                </div>
             </div>
-
-            <div className="input">
-            <label>Your password</label>
-            <input type="password"></input>
-            
-            </div>
-
-            <Button className="button" text="Login" color="#2D527C" onClick={() => console.log('Form submitted')} />
-
-            <div className="register">
-                <p>Dont have an account?<a href="#">Register</a></p>
-
-            </div>
-
-        </form>
-
         </div>
     )
 }
-        

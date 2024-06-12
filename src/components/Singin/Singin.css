@@ -1,36 +1,17 @@
-body {
-    
-        height: 100%;
-        margin: 0;
-        
-    
-}
-
-.cotainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background: url('../../assets/images/signup.jpg') no-repeat center center fixed;
-    background-size: cover;
-}
-
 .logo {
-    width: 14rem; 
-    height: auto;
+    width: 14rem;
     margin-bottom: 4rem;
 }
 
-.form {
+.sign-in-container {
     background-color: white;
-    padding: 30px;
+    padding: 2rem;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     text-align: center;
-    max-width: 400px;
+    max-width: 500px;
     width: 100%;
     margin: 0 auto;
-
 }
 
 .input {
@@ -67,14 +48,14 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #2D527C; 
+    background-color: #2D527C;
 }
 
 .register {
-    
-        margin-top: 2.5rem;
-        font-size: 1rem;
-    
+
+    margin-top: 2.5rem;
+    font-size: 1rem;
+
 }
 
 .register a {

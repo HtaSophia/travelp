@@ -19,13 +19,13 @@ function App() {
     <Routes>
       <Route path='/' index element={
         <ProtectedRoute>
-          <Navbar name={currentUser?.username} />
+          <Navbar username={currentUser?.username} />
           {/* travels, travel details and create travel pages here */}
           <Footer />
         </ProtectedRoute>
       }></Route>
       {/* <Route path='register' element={<Register />}></Route> */}
-      <Route path='login' element={<Singin/>}></Route>
+      <Route path='login' element={<Singin />}></Route>
       <Route path='*' element={<Navigate to={'/'} />}></Route>
     </Routes>
   )

@@ -1,26 +1,25 @@
 .badge {
-    position: relative;
-  display: inline-block;
-  border-bottom: 1px dotted black;
-  padding: 2rem;
-  width: 100px;
-  height: 100px;
+    padding: 0.5rem !important;
+
+    i {
+        font-size: 1.5rem;
+    }
 }
 
-.tooltiptext {
+.tooltip-text {
     visibility: hidden;
     width: 120px;
-    background-color: black;
+    background-color: #2e2e2e;
     color: #fff;
     text-align: center;
-    border-radius: 6px;
+    border-radius: 5px;
     padding: 5px 0;
-  
+
     /* Position the tooltip */
     position: absolute;
     z-index: 1;
 }
 
-.badge:hover .tooltiptext {
+.badge:hover .tooltip-text {
     visibility: visible;
-  }
+}

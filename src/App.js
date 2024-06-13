@@ -37,6 +37,7 @@ function App() {
       }></Route>
       <Route path='register' element={<Signup />}></Route>
       <Route path='login' element={<Singin />}></Route>
+      <Route path='map' element={<Map />}></Route>
       <Route path='*' element={<Navigate to={'/'} />}></Route>
     </Routes>
   )

@@ -1,10 +1,10 @@
-import './Singin.css';
+import './SingIn.css';
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import logo from '../../assets/images/Logo.svg';
-import Button from '../shared/Button/Button';
+import Button from '../../components/shared/Button/Button';
 
-export default function Singin() {
+export default function SingIn() {
     const [formData, setFormData] = useState({ email: "", password: "" });
 
     const handleChange = (event) => {
@@ -57,7 +57,7 @@ export default function Singin() {
 
                 <div className="register mt-4">
                     <span>Do not have an account?</span>
-                    <NavLink className="navbar-brand" to="/register">Register</NavLink>
+                    <NavLink className="navbar-brand" to="/sign-up">Register</NavLink>
                 </div>
             </div>
         </div>

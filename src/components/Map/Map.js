@@ -1,8 +1,11 @@
 import './Map.css';
-import React, { useEffect } from 'react';
-import { loadGoogleMapsScript } from '../../utils/loadGoogleMaps';
+import React, { useEffect, useRef } from 'react';
+import { loadGoogleMapsScriptComponent } from '../../utils/loadGoogleMapsComponent';
 
 const Map = ({ markers }) => {
+    const mapRef = useRef(null);
+
+    // useEffect for initializing the map (runs once)
     useEffect(() => {
         const initializeMap = () => {
             // Check if google maps is already initialized
@@ -16,25 +19,37 @@ const Map = ({ markers }) => {
                 center: { lat: 40.7128, lng: -74.006 }, // Initial center position (New York)
                 zoom: 12, // Initial zoom level
             };
-            const map = new window.google.maps.Map(document.getElementById('googleMaps'), mapOptions);
+            mapRef.current = new window.google.maps.Map(document.getElementById('myMap'), mapOptions);
+
+            console.log("Map initialized:", mapRef.current);
+        };
+
+        // Load Google Maps API script and initialize map
+        loadGoogleMapsScriptComponent(initializeMap);
+    }, []); // Empty dependency array ensures this useEffect runs only once
+
+    // useEffect for handling changes to markers prop
+    useEffect(() => {
+        if (mapRef.current) {
+            // Clear existing markers
+            mapRef.current?.markers?.forEach(marker => {
+                marker.setMap(null);
+            });
 
             // Add markers from props
             markers.forEach((marker, index) => {
                 new window.google.maps.Marker({
                     position: marker.position,
-                    map: map,
+                    map: mapRef.current,
                     title: marker.title,
                     label: `${index + 1}`, // Optional: Marker label (e.g., 1, 2, 3...)
                 });
             });
-        };
-
-        // Load Google Maps API script
-        loadGoogleMapsScript(initializeMap);
-    }, [markers]); // Ensure useEffect runs whenever markers prop changes
+        }
+    }, [markers]);
 
     return (
-        <div id="googleMaps" className="map-container">
+        <div style={{ height: '600px', width: '400px' }} id="myMap" className="map-container">
             {/* Map will be rendered here */}
         </div>
     );

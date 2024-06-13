@@ -1,0 +1,6 @@
+#map {
+    height: 400px; /* Adjust the height as needed */
+    width: 100%;   /* Make the map container full width */
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}

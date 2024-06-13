@@ -1,0 +1,50 @@
+.logo {
+    width: 14rem;
+}
+
+.sign-in-container {
+    background-color: white;
+    padding: 4rem 2rem;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.form {
+    margin-top: 1.5rem;
+}
+
+.form-label {
+    font-weight: bold;
+}
+
+.form-control {
+    width: 100%;
+    padding: 0.75rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.invalid-feedback {
+    color: #dc3545;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+}
+
+.btn {
+    width: 100%;
+}
+
+.register {
+    margin-top: 1rem;
+}
+
+.register a {
+    margin-left: 5px;
+    color: #4285F4;
+    text-decoration: none;
+    text-decoration: underline;
+}

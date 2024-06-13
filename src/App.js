@@ -7,6 +7,7 @@ import Navbar from './components/Navbar/Navbar.js';
 import Badge from './components/shared/Badge/Badge.js';
 import Footer from './components/Footer/Footer.js';
 import Singin from './components/Singin/Singin.js';
+import Signup from './components/Signup/Signup.js';
 
 
 function App() {
@@ -26,7 +27,7 @@ function App() {
           <Footer />
         </ProtectedRoute>
       }></Route>
-      {/* <Route path='register' element={<Register />}></Route> */}
+      <Route path='register' element={<Signup />}></Route>
       <Route path='login' element={<Singin />}></Route>
       <Route path='*' element={<Navigate to={'/'} />}></Route>
     </Routes>

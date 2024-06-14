@@ -1,37 +1,25 @@
 import './App.css';
-import React, { useContext } from 'react';
+import React from 'react';
 import { Routes, Route, Navigate } from "react-router-dom";
-import { AuthContext } from './auth/AuthContext.js';
 
-import Navbar from './components/Navbar/Navbar.js';
-import Badge from './components/shared/Badge/Badge.js';
-import Footer from './components/Footer/Footer.js';
-import Singin from './components/Singin/Singin.js';
-import Signup from './components/Signup/Signup.js';
+import ProtectedRoute from './auth/components/ProtectedRoutes.js';
+import SingIn from './pages/SignIn/SignIn.js';
+import SignUp from './pages/SignUp/SignUp.js';
 
 
 function App() {
-  const { currentUser } = useContext(AuthContext);
-
-  const ProtectedRoute = ({ children }) => {
-    if (!currentUser) return <Navigate to="/login" />
-    return children;
-  }
-
-  return (
-    <Routes>
-      <Route path='/' index element={
-        <ProtectedRoute>
-          <Navbar username={currentUser?.username} />
-          {/* travels, travel details and create travel pages here */}
-          <Footer />
-        </ProtectedRoute>
-      }></Route>
-      <Route path='register' element={<Signup />}></Route>
-      <Route path='login' element={<Singin />}></Route>
-      <Route path='*' element={<Navigate to={'/'} />}></Route>
-    </Routes>
-  )
+    return (
+        <Routes>
+            <Route element={<ProtectedRoute />}>
+                <Route path="/travels" index element={<h1>Travels</h1>} />
+                <Route path="/travel-details" element={<h1>Travel Details</h1>} />
+                <Route path="/travel" element={<h1>Edit Travel</h1>} />
+            </Route>
+            <Route path='sign-up' element={<SignUp />}></Route>
+            <Route path='sign-in' element={<SingIn />}></Route>
+            <Route path='*' element={<Navigate to={'/travels'} />}></Route>
+        </Routes>
+    )
 }
 
 export default App;

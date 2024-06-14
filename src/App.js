@@ -8,7 +8,6 @@ import ProtectedRoute from './auth/components/ProtectedRoutes.js';
 import SingIn from './pages/SignIn/SignIn.js';
 import SignUp from './pages/SignUp/SignUp.js';
 
-
 function App() {
     return (
         <Routes>

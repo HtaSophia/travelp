@@ -1,29 +1,23 @@
-import { useContext } from "react";
-import { AuthContext } from "../auth/AuthContext";
+import { useAuthContext } from "../auth/AuthContext";
 import { auth, db } from "./firebase-config";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth";
-import { collection, doc, getDocs, query, serverTimestamp, setDoc, updateDoc, where } from "firebase/firestore";
-import { v5 as uuid } from 'uuid';
+import { collection, doc, getDoc, getDocs, query, serverTimestamp, setDoc, updateDoc, where } from "firebase/firestore";
 
 export function useFirebase() {
     const userCollectionRef = collection(db, 'users');
     const travelCollectionRef = collection(db, 'travels');
 
-    const { currentUser } = useContext(AuthContext);
+    const { currentUser } = useAuthContext();
 
     async function userRegister(username, email, password) {
-        try {
-            const response = await createUserWithEmailAndPassword(auth, email, password);
-            const { uid } = response.user;
+        const response = await createUserWithEmailAndPassword(auth, email, password);
+        const { uid } = response.user;
 
-            return setDoc(doc(userCollectionRef, uid), {
-                id: uid,
-                email,
-                username
-            });
-        } catch (error) {
-            throw new Error(error.message);
-        }
+        return setDoc(doc(userCollectionRef, uid), {
+            id: uid,
+            email,
+            username
+        });
     }
 
     async function userLogin(email, password) {
@@ -33,6 +27,24 @@ export function useFirebase() {
     async function userLogout() {
         try {
             await signOut(auth);
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    }
+
+    async function getUserName() {
+        try {
+            if (!currentUser) {
+                return '';
+            }
+
+            const user = await getDoc(doc(userCollectionRef, currentUser.uid));
+
+            if (!user.exists()) {
+                return '';
+            }
+
+            return user.data()?.username;
         } catch (error) {
             throw new Error(error.message);
         }
@@ -52,7 +64,6 @@ export function useFirebase() {
     async function createTravel(travel) {
         const newTravel = {
             ...travel,
-            id: uuid(),
             userId: currentUser.id,
             createdAt: serverTimestamp(),
             updatedAt: serverTimestamp(),
@@ -77,5 +88,5 @@ export function useFirebase() {
         }
     }
 
-    return { userRegister, userLogin, userLogout, getTravels, createTravel, updateTravel };
+    return { userRegister, userLogin, userLogout, getUserName, getTravels, createTravel, updateTravel };
 }

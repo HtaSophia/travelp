@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../firebase/firebase-config.js";
 
 function useAuth() {
-    const [currentUser, setCurrentUser] = useState({});
+    const [currentUser, setCurrentUser] = useState(null);
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -15,7 +15,7 @@ function useAuth() {
     return { currentUser };
 }
 
-export const AuthContext = React.createContext();
+const AuthContext = React.createContext();
 
 export function AuthContextProvider({ children }) {
     const { currentUser } = useAuth();
@@ -26,3 +26,7 @@ export function AuthContextProvider({ children }) {
         </AuthContext.Provider>
     )
 }
+
+export const useAuthContext = () => {
+    return useContext(AuthContext);
+};

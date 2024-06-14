@@ -1,67 +1,34 @@
 import './App.css';
-import React, { useContext } from 'react';
-import { Routes, Route, Navigate } from "react-router-dom";
-import { AuthContext } from './auth/AuthContext.js';
-import Badge from './components/shared/Badge/Badge.js';
-import Navbar from './components/Navbar/Navbar.js';
-import Footer from './components/Footer/Footer.js';
-import Singin from './components/Singin/Singin.js';
-import Signup from './components/Signup/Signup.js';
-import Map from './components/Map/Map.js';
-import CardComponent from './components/Card/CardComponent.js';
+import notFoundImg from './assets/icons/404.svg';
+import React from 'react';
+import { Routes, Route } from "react-router-dom";
 
-// Import the image from the assets folder
-import nycImage from '../src/assets/images/nycity.jpg';
+import Authentication from './auth/components/Authentication.js';
+import ProtectedRoute from './auth/components/ProtectedRoutes.js';
+import SingIn from './pages/SignIn/SignIn.js';
+import SignUp from './pages/SignUp/SignUp.js';
 
 function App() {
-  const { currentUser } = useContext(AuthContext);
+    return (
+        <Routes>
+            <Route element={<ProtectedRoute />}>
+                <Route path="/travels" index element={<h1>Travels</h1>} />
+                <Route path="/travel-details" element={<h1>Travel Details</h1>} />
+                <Route path="/travel" element={<h1>Edit Travel</h1>} />
+            </Route>
 
-  const ProtectedRoute = ({ children }) => {
-    if (!currentUser) return <Navigate to="/login" />
-    return children;
-  };
+            <Route element={<Authentication />}>
+                <Route path='sign-up' element={<SignUp />}></Route>
+                <Route path='sign-in' element={<SingIn />}></Route>
+            </Route>
 
-  // Example array of markers
-  const markers = [
-    { position: { lat: 40.7128, lng: -74.006 }, title: 'Marker 1' },
-    { position: { lat: 40.7259, lng: -73.9805 }, title: 'Marker 2' },
-    // Add more markers as needed
-  ];
-
-  const handleCardClick = () => {
-    alert('Card clicked!');
-  };
-
-  return (
-    <Routes>
-      <Route path='/' index element={
-        <ProtectedRoute>
-          <Navbar username={currentUser?.username} />
-          <div className="container mt-5">
-            <CardComponent
-              imgUrl={nycImage} // Use the imported image here
-              title="New York City"
-              description="A short trip with my family to New York City for the holiday."
-              onClick={handleCardClick}
-            />
-          </div>
-          <Footer />
-        </ProtectedRoute>
-      }></Route>
-      <Route path='register' element={<Signup />}></Route>
-      <Route path='login' element={<Singin />}></Route>
-      <Route path='map' element={<Map />}></Route>
-      <Route path='travel' element={
-        <CardComponent
-          imgUrl={nycImage} // Use the imported image here
-          title="New York City"
-          description="A short trip with my family to New York City for the holiday."
-          onClick={handleCardClick}
-        />
-      }></Route>
-      <Route path='*' element={<Navigate to={'/'} />}></Route>
-    </Routes>
-  );
+            <Route path='*' element={
+                <div className="text-center">
+                    <img src={notFoundImg} alt="draw of a florets with a 404 number in the middle" />
+                </div>
+            }></Route>
+        </Routes>
+    )
 }
 
 export default App;

@@ -4,7 +4,7 @@ import { useAuthContext } from "../AuthContext";
 import Footer from '../../components/Footer/Footer';
 import Navbar from '../../components/Navbar/Navbar';
 
-const ProtectedRoute = () => {
+export default function ProtectedRoute() {
     const { currentUser } = useAuthContext();
 
     if (!currentUser) {
@@ -17,5 +17,3 @@ const ProtectedRoute = () => {
         <Footer />
     </>);
 }
-
-export default ProtectedRoute;

@@ -1,18 +1,28 @@
 import './Navbar.css';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import logo from '../../assets/images/Logo.svg';
 import { useFirebase } from '../../firebase/useFirebase';
 
-function Navbar(props) {
-    const { userLogout } = useFirebase();
+function Navbar() {
+    const { userLogout, getUserName } = useFirebase();
+    const [username, setUsername] = useState('');
+
+    useEffect(() => {
+        const handleGetUserName = async () => {
+            const currentUsername = await getUserName();
+            setUsername(currentUsername);
+        }
+
+        handleGetUserName();
+    });
 
     function handleLogOut() {
         userLogout();
     }
 
     return (
-        <nav className="navbar navbar-expand-lg  bg-body-tertiary">
+        <nav className="navbar navbar-expand-lg bg-body-tertiary">
             <div className="container-fluid">
                 <NavLink className="navbar-brand" to="/"><img src={logo}></img></NavLink>
 
@@ -25,7 +35,7 @@ function Navbar(props) {
                         <li className="nav-item dropdown">
                             <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <div className="user-image"><img src='https://placehold.co/40x40'></img></div>
-                                <span>{props.username}</span>
+                                <span>{username}</span>
                             </a>
                             <ul className="dropdown-menu">
                                 <li><button className="dropdown-item" onClick={handleLogOut}>Log out</button></li>

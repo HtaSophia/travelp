@@ -1,20 +1,36 @@
-import './SingIn.css';
-import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import './SignIn.css';
 import logo from '../../assets/images/Logo.svg';
-import Button from '../../components/shared/Button/Button';
+import React, { useState } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
+import { useLoggedUser } from '../../auth/hooks/useLoggedUser.js';
+import { useFirebase } from '../../firebase/useFirebase.js';
+
+import Button from '../../components/shared/Button/Button.js';
+import ErrorAlert from '../../components/shared/ErrorAlert/ErrorAlert.js';
 
 export default function SingIn() {
+    const navigate = useNavigate();
+    const { userLogin } = useFirebase();
+    useLoggedUser();
+
     const [formData, setFormData] = useState({ email: "", password: "" });
+    const [errors, setErrors] = useState({});
 
     const handleChange = (event) => {
         const { name, value } = event.target;
         setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        console.log(formData)
+
+        try {
+            await userLogin(formData.email, formData.password);
+            navigate("/travels");
+        } catch (error) {
+            console.error(error.message);
+            setErrors({ general: error.message });
+        }
     }
 
     return (
@@ -60,6 +76,8 @@ export default function SingIn() {
                     <NavLink className="navbar-brand" to="/sign-up">Register</NavLink>
                 </div>
             </div>
+
+            <ErrorAlert variant="danger" error={errors.general} />
         </div>
     )
 }

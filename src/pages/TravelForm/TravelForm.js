@@ -10,6 +10,7 @@ export default function TravelForm() {
     const { getTravel, createTravel, updateTravel } = useFirebase();
 
     const [travelForm, setTravelForm] = React.useState({});
+    const [todos, setTodos] = React.useState([]);
 
     useEffect(() => {
         console.log(travelId);
@@ -38,6 +39,23 @@ export default function TravelForm() {
         }
     };
 
+    const handleAddTodo = (event) => {
+        if (event.key !== "Enter") return;
+        event.preventDefault();
+
+        const value = event.target.value;
+        if (!value.trim()) return;
+
+        setTodos([...todos, value]);
+        event.target.value = "";
+    };
+
+    const handleRemoveTodo = (index) => {
+        const newTodos = [...todos];
+        newTodos.splice(index, 1);
+        setTodos(newTodos);
+    };
+
     return (
         <div className="container py-5">
             <header className="text-center mb-5">
@@ -47,7 +65,7 @@ export default function TravelForm() {
                 <form className="row g-3" onSubmit={handleSubmit}>
                     <div className="col-12">
                         <label htmlFor="city" className="form-label">
-                            City
+                            City*
                         </label>
                         <input
                             type="text"
@@ -62,7 +80,7 @@ export default function TravelForm() {
 
                     <div className="col-md-6">
                         <label htmlFor="title" className="form-label">
-                            Title
+                            Title*
                         </label>
                         <input
                             type="text"
@@ -76,7 +94,7 @@ export default function TravelForm() {
 
                     <div className="col-md-6">
                         <label htmlFor="title" className="form-label">
-                            Category
+                            Category*
                         </label>
                         <select
                             className="form-select"
@@ -87,15 +105,15 @@ export default function TravelForm() {
                             required
                         >
                             <option defaultValue={""}>Select Category</option>
-                            <option value="1">Favorite</option>
-                            <option value="2">To Go</option>
-                            <option value="3">...</option>
+                            <option value="favorite">Favorite</option>
+                            <option value="wantToGo">Want to go</option>
+                            <option value="booked">Booked</option>
                         </select>
                     </div>
 
                     <div className="col-md-6">
                         <label htmlFor="startDate" className="form-label">
-                            Start Date
+                            Start Date*
                         </label>
                         <input
                             type="date"
@@ -117,7 +135,6 @@ export default function TravelForm() {
                             id="endDate"
                             name="endDate"
                             value={travelForm.endDate}
-                            required
                         />
                     </div>
 
@@ -132,6 +149,36 @@ export default function TravelForm() {
                             value={travelForm.description}
                             rows="3"
                         ></textarea>
+                    </div>
+
+                    <div className="col-12">
+                        <label htmlFor="description" className="form-label">
+                            To Do List
+                        </label>
+
+                        <input
+                            type="text"
+                            className="form-control"
+                            id="todoList"
+                            name="todoList"
+                            value={travelForm.todo}
+                            onKeyDown={handleAddTodo}
+                            aria-describedby="add-todo-text"
+                        />
+
+                        <div className="form-text" id="add-todo-text">
+                            Press enter to add a new to-do item.
+                        </div>
+                    </div>
+
+                    <div className="col-12 d-flex gap-1">
+                        {todos.map((todo, index) => (
+                            <ToDo
+                                key={index}
+                                text={todo}
+                                onRemove={() => handleRemoveTodo(index)}
+                            />
+                        ))}
                     </div>
 
                     <footer className="col-12 d-flex justify-content-between">

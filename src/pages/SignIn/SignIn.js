@@ -1,12 +1,12 @@
-import './SignIn.css';
-import logo from '../../assets/images/Logo.svg';
+import "./SignIn.css";
+import logo from "../../assets/images/Logo.svg";
 import React, { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { useLoggedUser } from '../../auth/hooks/useLoggedUser.js';
-import { useFirebase } from '../../firebase/useFirebase.js';
+import { useLoggedUser } from "../../auth/hooks/useLoggedUser.js";
+import { useFirebase } from "../../firebase/useFirebase.js";
 
-import Button from '../../components/shared/Button/Button.js';
-import ErrorAlert from '../../components/shared/ErrorAlert/ErrorAlert.js';
+import Button from "../../components/shared/Button/Button.js";
+import ErrorAlert from "../../components/shared/ErrorAlert/ErrorAlert.js";
 
 export default function SingIn() {
     const navigate = useNavigate();
@@ -31,12 +31,16 @@ export default function SingIn() {
             console.error(error.message);
             setErrors({ general: error.message });
         }
-    }
+    };
 
     return (
         <div className="auth-container">
             <div className="sign-in-container text-center">
-                <img className="logo mb-5" src={logo} alt="TravelP logo with the Travel as blue text and P as green text"></img>
+                <img
+                    className="logo mb-5"
+                    src={logo}
+                    alt="TravelP logo with the Travel as blue text and P as green text"
+                ></img>
 
                 <form className="form text-start" onSubmit={handleSubmit}>
                     <div className="mb-3">
@@ -68,16 +72,18 @@ export default function SingIn() {
                         />
                     </div>
 
-                    <Button text="Login" type="submit" />
+                    <Button type="submit">Login</Button>
                 </form>
 
                 <div className="register mt-4">
                     <span>Do not have an account?</span>
-                    <NavLink className="navbar-brand" to="/sign-up">Register</NavLink>
+                    <NavLink className="navbar-brand" to="/sign-up">
+                        Register
+                    </NavLink>
                 </div>
             </div>
 
             <ErrorAlert variant="danger" error={errors.general} />
         </div>
-    )
+    );
 }

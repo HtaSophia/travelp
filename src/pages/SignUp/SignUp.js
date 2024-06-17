@@ -135,7 +135,7 @@ export default function SignUp() {
                         )}
                     </div>
 
-                    <Button text="Register" type="submit" />
+                    <Button type="submit">Register</Button>
                 </form>
 
                 <div className="register mt-4">

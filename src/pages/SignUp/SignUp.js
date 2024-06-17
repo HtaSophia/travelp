@@ -1,12 +1,12 @@
-import './SignUp.css';
-import logo from '../../assets/images/Logo.svg';
+import "./SignUp.css";
+import logo from "../../assets/images/Logo.svg";
 import React, { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { useLoggedUser } from '../../auth/hooks/useLoggedUser.js';
-import { useFirebase } from '../../firebase/useFirebase.js';
+import { useLoggedUser } from "../../auth/hooks/useLoggedUser.js";
+import { useFirebase } from "../../firebase/useFirebase.js";
 
-import Button from '../../components/shared/Button/Button.js';
-import ErrorAlert from '../../components/shared/ErrorAlert/ErrorAlert.js';
+import Button from "../../components/shared/Button/Button.js";
+import ErrorAlert from "../../components/shared/ErrorAlert/ErrorAlert.js";
 
 export default function SignUp() {
     const navigate = useNavigate();
@@ -17,7 +17,7 @@ export default function SignUp() {
         username: "",
         email: "",
         password: "",
-        confirmPassword: ""
+        confirmPassword: "",
     });
     const [errors, setErrors] = useState({});
 
@@ -36,18 +36,22 @@ export default function SignUp() {
         }
 
         try {
-            await userRegister(formData.username, formData.email, formData.password);
+            await userRegister(
+                formData.username,
+                formData.email,
+                formData.password
+            );
             navigate("/travels");
         } catch (error) {
             console.error(error);
             setErrors({ general: error.message });
         }
-    }
+    };
 
     const validateForm = ({ password, confirmPassword }) => {
         const errors = {};
 
-        if ((password && confirmPassword) && (password !== confirmPassword)) {
+        if (password && confirmPassword && password !== confirmPassword) {
             errors.confirmPassword = "Passwords do not match";
         }
 
@@ -56,8 +60,12 @@ export default function SignUp() {
 
     return (
         <div className="auth-container">
-            <div className="sign-in-container text-center">
-                <img className="logo mb-4" src={logo} alt="TravelP logo with the Travel as blue text and P as green text" />
+            <div className="sign-up-container text-center">
+                <img
+                    className="logo mb-4"
+                    src={logo}
+                    alt="TravelP logo with the Travel as blue text and P as green text"
+                />
 
                 <form className="form text-start" onSubmit={handleSubmit}>
                     <div className="mb-3">
@@ -109,7 +117,9 @@ export default function SignUp() {
                     <div className="mb-4">
                         <label className="form-label">Confirm Password</label>
                         <input
-                            className={`form-control ${errors.confirmPassword && "is-invalid"}`}
+                            className={`form-control ${
+                                errors.confirmPassword && "is-invalid"
+                            }`}
                             type="password"
                             id="confirmPassword"
                             name="confirmPassword"
@@ -118,7 +128,11 @@ export default function SignUp() {
                             onChange={handleChange}
                             required
                         />
-                        {errors.confirmPassword && <div className="invalid-feedback">{errors.confirmPassword}</div>}
+                        {errors.confirmPassword && (
+                            <div className="invalid-feedback">
+                                {errors.confirmPassword}
+                            </div>
+                        )}
                     </div>
 
                     <Button text="Register" type="submit" />
@@ -126,7 +140,9 @@ export default function SignUp() {
 
                 <div className="register mt-4">
                     <span>Already have an account?</span>
-                    <NavLink className="navbar-brand" to="/sign-in">Sign In</NavLink>
+                    <NavLink className="navbar-brand" to="/sign-in">
+                        Sign In
+                    </NavLink>
                 </div>
             </div>
 

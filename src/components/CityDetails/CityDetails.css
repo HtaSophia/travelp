@@ -1,0 +1,5 @@
+.city-details {
+    background-color: var(--secondary-color);
+    border-radius: 5px;
+    padding: 2em 4em;
+}

@@ -1,5 +1,6 @@
 import React from "react";
 import { Navigate, Outlet } from "react-router-dom";
+import { AmadeusContextProvider } from "../../api/amadeus/AmadeusContext";
 import { useAuthContext } from "../AuthContext";
 
 import Footer from "../../components/Footer/Footer";
@@ -13,10 +14,10 @@ export default function ProtectedRoute() {
     if (!currentUser) return <Navigate to="/sign-in" />;
 
     return (
-        <>
+        <AmadeusContextProvider>
             <Navbar />
             <Outlet />
             <Footer />
-        </>
+        </AmadeusContextProvider>
     );
 }

@@ -2,16 +2,14 @@ import "./SignUp.css";
 import logo from "../../assets/images/Logo.svg";
 import React, { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { useLoggedUser } from "../../auth/hooks/useLoggedUser.js";
 import { useFirebase } from "../../firebase/useFirebase.js";
 
 import Button from "../../components/shared/Button/Button.js";
-import ErrorAlert from "../../components/shared/ErrorAlert/ErrorAlert.js";
+import Alert from "../../components/shared/Alert/Alert.js";
 
 export default function SignUp() {
     const navigate = useNavigate();
     const { userRegister } = useFirebase();
-    useLoggedUser();
 
     const [formData, setFormData] = useState({
         username: "",
@@ -146,7 +144,7 @@ export default function SignUp() {
                 </div>
             </div>
 
-            <ErrorAlert variant="danger" error={errors.general} />
+            <Alert variant="danger" message={errors.general} />
         </div>
     );
 }

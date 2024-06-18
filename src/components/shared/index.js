@@ -1,5 +1,5 @@
-import Button from './Button.js';
-import Badge from './Badge.js';
-import ErrorAlert from './ErrorAlert.js';
+import Button from "./Button.js";
+import Badge from "./Badge.js";
+import Alert from "./Alert.js";
 
-export { Button, Badge, ErrorAlert };
+export { Button, Badge, Alert };

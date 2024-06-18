@@ -10,25 +10,28 @@ const AutocompleteInput = ({ id, name, value, placeholder, onChange }) => {
                 inputRef.current,
                 {
                     types: ["geocode"],
-                    fields: ["formatted_address", "geometry", "rating"],
+                    fields: ["formatted_address", "geometry"],
                 }
             );
 
-            inputRef.current.value = value;
             autocomplete.addListener("place_changed", () => {
                 const place = autocomplete.getPlace();
                 if (place.geometry) {
-                    const latitude = place.geometry.location.lat();
-                    const longitude = place.geometry.location.lng();
-                    const address = place.formatted_address;
-
-                    onChange({ latitude, longitude, address });
+                    onChange({
+                        latitude: place.geometry.location.lat(),
+                        longitude: place.geometry.location.lng(),
+                        address: place.formatted_address,
+                    });
                 }
             });
 
             autocompleteRef.current = autocomplete;
         }
     }, []);
+
+    useEffect(() => {
+        inputRef.current.value = value;
+    }, [value]);
 
     return (
         <input

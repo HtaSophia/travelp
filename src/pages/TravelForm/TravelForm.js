@@ -39,7 +39,6 @@ export default function TravelForm() {
                 }
 
                 const { startDate, endDate, ...currentTravel } = data;
-                console.log(data);
 
                 const formattedStartDate = new Date(startDate.toDate())
                     .toISOString()

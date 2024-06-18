@@ -14,7 +14,6 @@ export default function CityDetails({ destination }) {
                     destination.longitude
                 );
 
-                console.log(activityList);
                 setActivities(activityList);
             };
 

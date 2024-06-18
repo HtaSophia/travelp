@@ -1,41 +1,115 @@
+import "./TravelForm.css";
 import React, { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useFirebase } from "../../firebase/useFirebase";
 
 import ToDo from "../../components/ToDo/ToDo";
 import Button from "../../components/shared/Button/Button";
+import CityDetails from "../../components/CityDetails/CityDetails";
+import AutocompleteInput from "../../components/AutocompleteInput/AutocompleteInput";
+import Alert from "../../components/shared/Alert/Alert";
 
 export default function TravelForm() {
     const { travelId } = useParams();
-    const { getTravel, createTravel, updateTravel } = useFirebase();
+    const navigate = useNavigate();
+    const { getTravel, createTravel, updateTravel, deleteTravel } =
+        useFirebase();
+    const [alert, setAlert] = React.useState({ message: "", variant: "" });
 
-    const [travelForm, setTravelForm] = React.useState({});
-    const [todos, setTodos] = React.useState([]);
+    const [travelForm, setTravelForm] = React.useState({
+        destination: { latitude: 0, longitude: 0, address: "" },
+        title: "",
+        category: "",
+        startDate: "",
+        endDate: "",
+        description: "",
+        todoList: [],
+    });
 
     useEffect(() => {
-        console.log(travelId);
         const handleGetTravel = async (travelId) => {
             try {
-                const currentTravel = await getTravel(travelId);
-                setTravelForm(currentTravel);
+                const data = await getTravel(travelId);
+                if (!data) {
+                    setAlert({
+                        message: "Travel not found",
+                        variant: "danger",
+                    });
+                    navigateToTravels();
+                }
+
+                const { startDate, endDate, ...currentTravel } = data;
+                console.log(data);
+
+                const formattedStartDate = new Date(startDate.toDate())
+                    .toISOString()
+                    .split("T")[0];
+                const formattedEndDate = endDate
+                    ? new Date(endDate.toDate()).toISOString().split("T")[0]
+                    : "";
+
+                setTravelForm({
+                    ...currentTravel,
+                    startDate: formattedStartDate,
+                    endDate: formattedEndDate,
+                });
             } catch (error) {
                 console.error(error.message);
             }
         };
 
         if (travelId) handleGetTravel(travelId);
-    }, [getTravel, travelId]);
+    }, []);
 
-    const handleSubmit = (event) => {
+    const handleDestinationChange = (destination) => {
+        setTravelForm((prevTravelForm) => ({
+            ...prevTravelForm,
+            destination,
+        }));
+    };
+
+    const handleFormChange = (event) => {
+        const { name, value } = event.target;
+        setTravelForm((prevTravelForm) => ({
+            ...prevTravelForm,
+            [name]: value,
+        }));
+    };
+
+    const handleSubmit = async (event) => {
         event.preventDefault();
+        const data = { ...travelForm };
 
-        const formData = new FormData(event.target);
-        const data = Object.fromEntries(formData.entries());
+        try {
+            if (travelId) {
+                await updateTravel({ ...data, id: travelId });
+                setAlert({
+                    message: "Travel updated successfully",
+                    variant: "success",
+                });
+            } else {
+                await createTravel({ ...data });
+                setAlert({
+                    message: "Travel created successfully",
+                    variant: "success",
+                });
+                navigateToTravels();
+            }
+        } catch (error) {
+            setAlert({ message: error.message, variant: "danger" });
+        }
+    };
 
-        if (travelId) {
-            updateTravel({ ...data, id: travelId });
-        } else {
-            createTravel(data);
+    const handleDelete = async () => {
+        try {
+            await deleteTravel(travelId);
+            setAlert({
+                message: "Travel deleted successfully",
+                variant: "success",
+            });
+            navigateToTravels();
+        } catch (error) {
+            setAlert({ message: error.message, variant: "danger" });
         }
     };
 
@@ -46,35 +120,46 @@ export default function TravelForm() {
         const value = event.target.value;
         if (!value.trim()) return;
 
-        setTodos([...todos, value]);
+        setTravelForm((prevTravelForm) => ({
+            ...prevTravelForm,
+            todoList: [...prevTravelForm.todoList, value],
+        }));
         event.target.value = "";
     };
 
     const handleRemoveTodo = (index) => {
-        const newTodos = [...todos];
-        newTodos.splice(index, 1);
-        setTodos(newTodos);
+        const updatedTodos = [...travelForm.todoList];
+        updatedTodos.splice(index, 1);
+
+        setTravelForm((prevTravelForm) => ({
+            ...prevTravelForm,
+            todoList: updatedTodos,
+        }));
+    };
+
+    const navigateToTravels = () => {
+        navigate("/travels");
     };
 
     return (
-        <div className="container py-5">
+        <div className="container py-5 travel-form">
             <header className="text-center mb-5">
-                <h1>Create a Travel Plan</h1>
+                <h1>{travelId ? "Edit" : "Create"} a Travel Plan</h1>
             </header>
+
             <section>
                 <form className="row g-3" onSubmit={handleSubmit}>
                     <div className="col-12">
-                        <label htmlFor="city" className="form-label">
-                            City*
+                        <label htmlFor="destination" className="form-label">
+                            Destination*
                         </label>
-                        <input
-                            type="text"
-                            className="form-control"
-                            id="city"
-                            name="city"
-                            value={travelForm.city}
-                            placeholder="1234 Main St"
-                            required
+
+                        <AutocompleteInput
+                            id="destination"
+                            name="destination"
+                            placeholder="i.e. Toronto, Canada"
+                            value={travelForm.destination.address}
+                            onChange={handleDestinationChange}
                         />
                     </div>
 
@@ -87,7 +172,9 @@ export default function TravelForm() {
                             className="form-control"
                             id="title"
                             name="title"
+                            placeholder="i.e. My Trip to Canada"
                             value={travelForm.title}
+                            onChange={handleFormChange}
                             required
                         />
                     </div>
@@ -102,6 +189,7 @@ export default function TravelForm() {
                             id="category"
                             name="category"
                             value={travelForm.category}
+                            onChange={handleFormChange}
                             required
                         >
                             <option defaultValue={""}>Select Category</option>
@@ -121,6 +209,7 @@ export default function TravelForm() {
                             id="startDate"
                             name="startDate"
                             value={travelForm.startDate}
+                            onChange={handleFormChange}
                             required
                         />
                     </div>
@@ -135,6 +224,7 @@ export default function TravelForm() {
                             id="endDate"
                             name="endDate"
                             value={travelForm.endDate}
+                            onChange={handleFormChange}
                         />
                     </div>
 
@@ -146,7 +236,9 @@ export default function TravelForm() {
                             className="form-control"
                             id="description"
                             name="description"
+                            placeholder="i.e. A short trip to Canada..."
                             value={travelForm.description}
+                            onChange={handleFormChange}
                             rows="3"
                         ></textarea>
                     </div>
@@ -161,7 +253,6 @@ export default function TravelForm() {
                             className="form-control"
                             id="todoList"
                             name="todoList"
-                            value={travelForm.todo}
                             onKeyDown={handleAddTodo}
                             aria-describedby="add-todo-text"
                         />
@@ -172,7 +263,7 @@ export default function TravelForm() {
                     </div>
 
                     <div className="col-12 d-flex gap-1">
-                        {todos.map((todo, index) => (
+                        {travelForm.todoList.map((todo, index) => (
                             <ToDo
                                 key={index}
                                 text={todo}
@@ -181,14 +272,35 @@ export default function TravelForm() {
                         ))}
                     </div>
 
-                    <footer className="col-12 d-flex justify-content-between">
-                        <Button color="danger-custom">Cancel</Button>
-                        <Button type="submit">
-                            {travelId ? "Update" : "Create"}
+                    <footer className="col-12 d-flex justify-content-between mt-5">
+                        <Button
+                            color="danger-custom"
+                            onClick={navigateToTravels}
+                        >
+                            Cancel
                         </Button>
+                        <div>
+                            <Button
+                                color="outline-danger me-2"
+                                onClick={handleDelete}
+                            >
+                                Delete
+                            </Button>
+                            <Button type="submit">
+                                {travelId ? "Update" : "Create"}
+                            </Button>
+                        </div>
                     </footer>
                 </form>
             </section>
+
+            {!travelId && (
+                <section className="mt-5">
+                    <CityDetails destination={travelForm.destination} />
+                </section>
+            )}
+
+            <Alert message={alert.message} variant={alert.variant} />
         </div>
     );
 }

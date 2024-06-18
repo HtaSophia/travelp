@@ -1,22 +1,43 @@
-import { useAuthContext } from "../auth/AuthContext";
+import {
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    signOut,
+} from "firebase/auth";
+import {
+    Timestamp,
+    collection,
+    deleteDoc,
+    doc,
+    getDoc,
+    getDocs,
+    query,
+    serverTimestamp,
+    setDoc,
+    updateDoc,
+    where,
+} from "firebase/firestore";
 import { auth, db } from "./firebase-config";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth";
-import { collection, doc, getDoc, getDocs, query, serverTimestamp, setDoc, updateDoc, where } from "firebase/firestore";
+import { useAuthContext } from "../auth/AuthContext";
+import { v4 as uuid } from "uuid";
 
 export function useFirebase() {
-    const userCollectionRef = collection(db, 'users');
-    const travelCollectionRef = collection(db, 'travels');
+    const userCollectionRef = collection(db, "users");
+    const travelCollectionRef = collection(db, "travels");
 
     const { currentUser } = useAuthContext();
 
     async function userRegister(username, email, password) {
-        const response = await createUserWithEmailAndPassword(auth, email, password);
+        const response = await createUserWithEmailAndPassword(
+            auth,
+            email,
+            password
+        );
         const { uid } = response.user;
 
         return setDoc(doc(userCollectionRef, uid), {
             id: uid,
             email,
-            username
+            username,
         });
     }
 
@@ -35,13 +56,13 @@ export function useFirebase() {
     async function getUserName() {
         try {
             if (!currentUser) {
-                return '';
+                return "";
             }
 
             const user = await getDoc(doc(userCollectionRef, currentUser.uid));
 
             if (!user.exists()) {
-                return '';
+                return "";
             }
 
             return user.data()?.username;
@@ -50,8 +71,21 @@ export function useFirebase() {
         }
     }
 
+    async function getTravel(travelId) {
+        try {
+            const travelRef = doc(travelCollectionRef, travelId);
+            const travelSnapshot = await getDoc(travelRef);
+            return travelSnapshot.data();
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    }
+
     async function getTravels() {
-        const travelsQuery = query(travelCollectionRef, where('userId', '==', currentUser.uid));
+        const travelsQuery = query(
+            travelCollectionRef,
+            where("userId", "==", currentUser.uid)
+        );
 
         try {
             const querySnapshot = await getDocs(travelsQuery);
@@ -64,9 +98,15 @@ export function useFirebase() {
     async function createTravel(travel) {
         const newTravel = {
             ...travel,
-            userId: currentUser.id,
+            id: uuid(),
+            userId: currentUser.uid,
+            startDate: Timestamp.fromDate(new Date(travel.startDate)),
             createdAt: serverTimestamp(),
             updatedAt: serverTimestamp(),
+        };
+
+        if (travel.endDate) {
+            newTravel.endDate = Timestamp.fromDate(new Date(travel.endDate));
         }
 
         try {
@@ -88,5 +128,24 @@ export function useFirebase() {
         }
     }
 
-    return { userRegister, userLogin, userLogout, getUserName, getTravels, createTravel, updateTravel };
+    async function deleteTravel(travelId) {
+        try {
+            const travelRef = doc(travelCollectionRef, travelId);
+            return deleteDoc(travelRef);
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    }
+
+    return {
+        userRegister,
+        userLogin,
+        userLogout,
+        getUserName,
+        getTravel,
+        getTravels,
+        createTravel,
+        updateTravel,
+        deleteTravel,
+    };
 }

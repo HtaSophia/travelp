@@ -1,7 +1,3 @@
-.logo {
-    width: 14rem;
-}
-
 .sign-in-container {
     background-color: white;
     padding: 4rem 2rem;
@@ -10,15 +6,19 @@
     max-width: 500px;
     width: 100%;
     margin: 0 auto;
-}
 
-.btn {
-    width: 100%;
-}
+    .logo {
+        width: 14rem;
+    }
 
-.register a {
-    margin-left: 5px;
-    color: #4285F4;
-    text-decoration: none;
-    text-decoration: underline;
+    .btn {
+        width: 100%;
+    }
+
+    .register a {
+        margin-left: 5px;
+        color: #4285f4;
+        text-decoration: none;
+        text-decoration: underline;
+    }
 }

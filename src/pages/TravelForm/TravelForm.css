@@ -1,0 +1,5 @@
+.travel-form {
+    & footer .btn {
+        padding: 0.5em 4em !important;
+    }
+}

@@ -10,8 +10,8 @@ import AutocompleteInput from "../../components/AutocompleteInput/AutocompleteIn
 import Alert from "../../components/shared/Alert/Alert";
 
 export default function TravelForm() {
-    const { travelId } = useParams();
     const navigate = useNavigate();
+    const { travelId } = useParams();
     const { getTravel, createTravel, updateTravel, deleteTravel } =
         useFirebase();
     const [alert, setAlert] = React.useState({ message: "", variant: "" });
@@ -274,7 +274,7 @@ export default function TravelForm() {
                     <footer className="col-12 d-flex justify-content-between mt-5">
                         <Button
                             color="danger-custom"
-                            onClick={navigateToTravels}
+                            onClick={() => navigate(-1)}
                         >
                             Cancel
                         </Button>

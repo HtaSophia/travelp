@@ -55,7 +55,7 @@ export default function TravelDetails() {
 
     if (!travelId || !travel) {
         return (
-            <div className="container travel-details py-5 text-center">
+            <div className="py-5 text-center">
                 <p>Travel not found</p>
             </div>
         );
@@ -63,7 +63,7 @@ export default function TravelDetails() {
 
     if (isLoading) {
         return (
-            <div className="container travel-details py-5">
+            <div className="container py-5">
                 <span className="placeholder col-6"></span>
                 <span className="placeholder w-75"></span>
                 <span className="placeholder w-100"></span>

@@ -1,0 +1,36 @@
+/* src/pages/Travels/Travels.css */
+.travels-page {
+  padding: 20px;
+}
+
+.travels-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.travels-filters {
+  display: flex;
+  gap: 10px;
+}
+
+.travels-content {
+  display: flex;
+  gap: 20px;
+}
+
+.travels-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  flex: 2;
+}
+
+.travels-map {
+  flex: 1;
+}
+
+.custom-card {
+  width: 300px;
+}

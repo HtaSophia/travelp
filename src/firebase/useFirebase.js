@@ -120,6 +120,17 @@ export function useFirebase() {
 
     async function updateTravel(travel) {
         try {
+            const updatedTravel = {
+                ...travel,
+                startDate: Timestamp.fromDate(new Date(travel.startDate)),
+            };
+
+            if (travel.endDate) {
+                updatedTravel.endDate = Timestamp.fromDate(
+                    new Date(travel.endDate)
+                );
+            }
+
             const travelRef = doc(travelCollectionRef, travel.id);
             return updateDoc(travelRef, {
                 ...travel,

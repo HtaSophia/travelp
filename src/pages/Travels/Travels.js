@@ -2,7 +2,7 @@ import "./Travels.css";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom"; // Import useNavigate for navigation
 import { useFirebase } from "../../firebase/useFirebase";
-import { getAllIcons } from "../../utils/categoryIcons";
+import { getAllIcons, getIconByCategory } from "../../utils/categoryIcons";
 
 import Button from "../../components/shared/Button/Button";
 import Card from "../../components/Card/Card";
@@ -86,38 +86,36 @@ const Travels = () => {
             </section>
 
             <div className="travels-content">
-                <div className="travels-list">
-                    <div className="row">
-                        {filteredTravels.length > 0 ? (
-                            filteredTravels.map((travel) => (
-                                <div key={travel.id} className="col-md-6">
-                                    <Card
-                                        imgUrl={travel.imgUrl}
-                                        title={travel.title}
-                                        destination={travel.destination.address}
-                                        description={travel.description}
-                                        category={travel.category}
-                                        onClick={() =>
-                                            navigate(`/travel/${travel.id}`)
-                                        }
-                                    />
-                                </div>
-                            ))
-                        ) : (
-                            <p>No travels found.</p>
-                        )}
-                    </div>
+                <div className="travels-list row py-2">
+                    {filteredTravels.length > 0 ? (
+                        filteredTravels.map((travel) => (
+                            <div key={travel.id} className="col-md-6">
+                                <Card
+                                    imgUrl={travel.imgUrl}
+                                    title={travel.title}
+                                    destination={travel.destination.address}
+                                    description={travel.description}
+                                    category={travel.category}
+                                    onClick={() =>
+                                        navigate(`/travel-details/${travel.id}`)
+                                    }
+                                />
+                            </div>
+                        ))
+                    ) : (
+                        <p>No travels found.</p>
+                    )}
                 </div>
 
-                <div className="travels-map">
+                <div className="travels-map py-2">
                     <Map
-                        markers={filteredTravels.map((travel, index) => ({
+                        markers={filteredTravels.map((travel) => ({
                             position: {
                                 lat: travel.destination.latitude,
                                 lng: travel.destination.longitude,
                             },
-                            title: travel.title,
-                            index,
+                            title: travel.destination.address,
+                            iconInfo: getIconByCategory(travel.category),
                         }))}
                     />
                 </div>

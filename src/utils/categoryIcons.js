@@ -19,3 +19,10 @@ const iconByCategory = {
 export function getIconByCategory(category) {
     return iconByCategory[category];
 }
+
+export function getAllIcons() {
+    return Object.entries(iconByCategory).map(([category, info]) => ({
+        ...info,
+        category,
+    }));
+}

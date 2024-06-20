@@ -21,7 +21,6 @@ const Travels = () => {
         async function fetchTravels() {
             try {
                 const travelList = await getTravels();
-                console.log("Travel List: ", travelList); // Debugging log
                 setTravels(travelList);
                 setFilteredTravels(travelList);
             } catch (error) {

@@ -10,6 +10,7 @@ import {
     doc,
     getDoc,
     getDocs,
+    orderBy,
     query,
     serverTimestamp,
     setDoc,
@@ -84,7 +85,8 @@ export function useFirebase() {
     async function getTravels() {
         const travelsQuery = query(
             travelCollectionRef,
-            where("userId", "==", currentUser.uid)
+            where("userId", "==", currentUser.uid),
+            orderBy("updatedAt", "desc")
         );
 
         try {

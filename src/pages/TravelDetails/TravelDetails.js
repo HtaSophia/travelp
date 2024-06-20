@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useFirebase } from "../../firebase/useFirebase";
 import { useUnsplashApi } from "../../api/unsplash/useUnsplashApi";
 
-import { getIconByCategory } from "../../utils/iconByCategory";
+import { getIconByCategory } from "../../utils/categoryIcons";
 
 import Alert from "../../components/shared/Alert/Alert";
 import Badge from "../../components/shared/Badge/Badge";

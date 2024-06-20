@@ -1,0 +1,23 @@
+.card {
+    padding: 0.8rem 0.6rem;
+    height: 100% !important;
+    max-width: 260px;
+    border: none !important;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+
+    img {
+        height: 10rem;
+        width: 100%;
+        max-height: 174px;
+        object-fit: cover;
+    }
+
+    .card-body {
+        padding: 1rem 0.5rem !important;
+    }
+}
+
+.card-text {
+    color: var(--subtext-color);
+}

@@ -1,4 +1,3 @@
-import "./Map.css";
 import React, { useEffect, useRef } from "react";
 
 const Map = ({ markers = [] }) => {
@@ -12,7 +11,8 @@ const Map = ({ markers = [] }) => {
 
         const mapOptions = {
             center: { lat: 40.7128, lng: -74.006 },
-            zoom: 12,
+            zoom: 3,
+            mapId: "ca25e83b67d13157",
         };
         mapRef.current = new window.google.maps.Map(
             document.getElementById("myMap"),
@@ -22,16 +22,20 @@ const Map = ({ markers = [] }) => {
 
     useEffect(() => {
         if (mapRef.current) {
-            mapRef.current?.markers?.forEach((marker) => {
-                marker.setMap(null);
-            });
+            markers.forEach((marker) => {
+                const icon = document.createElement("i");
+                icon.className = `bi bi-${marker.iconInfo.icon}`;
+                const pinNoGlyph = new window.google.maps.marker.PinElement({
+                    background: marker.iconInfo.color,
+                    borderColor: "#000000",
+                    glyph: icon,
+                });
 
-            markers.forEach((marker, index) => {
-                new window.google.maps.Marker({
-                    position: marker.position,
+                new window.google.maps.marker.AdvancedMarkerElement({
                     map: mapRef.current,
+                    position: marker.position,
+                    content: pinNoGlyph.element,
                     title: marker.title,
-                    label: `${index + 1}`,
                 });
             });
         }
@@ -39,7 +43,7 @@ const Map = ({ markers = [] }) => {
 
     return (
         <div
-            style={{ height: "600px", width: "400px" }}
+            style={{ height: "100%" }}
             id="myMap"
             className="map-container"
         ></div>

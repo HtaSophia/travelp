@@ -1,0 +1,32 @@
+.actions {
+    .left-side {
+        .btn {
+            margin-right: 5px;
+        }
+    }
+}
+
+.travels-content {
+    display: grid;
+    height: 90vh;
+    grid-template-columns: 1.2fr 1fr;
+    grid-template-rows: 1fr;
+    grid-template-areas: "list map";
+    gap: 1.5rem;
+}
+
+.travels-list {
+    grid-area: list;
+    row-gap: 1rem;
+    overflow-y: scroll;
+    -ms-overflow-style: none; /* for Internet Explorer, Edge */
+    scrollbar-width: none; /* for Firefox */
+
+    &::-webkit-scrollbar {
+        display: none; /* for Chrome, Safari, and Opera */
+    }
+}
+
+.travels-map {
+    grid-area: map;
+}

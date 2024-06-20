@@ -279,12 +279,14 @@ export default function TravelForm() {
                             Cancel
                         </Button>
                         <div>
-                            <Button
-                                color="outline-danger me-2"
-                                onClick={handleDelete}
-                            >
-                                Delete
-                            </Button>
+                            {travelId && (
+                                <Button
+                                    color="outline-danger me-2"
+                                    onClick={handleDelete}
+                                >
+                                    Delete
+                                </Button>
+                            )}
                             <Button type="submit">
                                 {travelId ? "Update" : "Create"}
                             </Button>

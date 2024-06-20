@@ -1,57 +1,24 @@
-.filter-button {
-  background-color: #f0f0f0; /* Default background color */
-  border: none;
-  cursor: pointer;
-  font-size: 1.5rem;
-  color: #000;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 4px;
-  transition: background-color 0.3s ease, color 0.3s ease;
+.actions {
+    .left-side {
+        .btn {
+            margin-right: 5px;
+        }
+    }
 }
-
-.filter-button.all {
-  background-color: #d4edda; /* Light green */
-}
-
-.filter-button.favorites {
-  background-color: #f8d7da; /* Light red */
-}
-
-.filter-button.flag {
-  background-color: #d1ecf1; /* Light blue */
-}
-
-.filter-button.active {
-  color: #fff;
-}
-
-.filter-button.all.active {
-  background-color: #28a745; /* Green */
-}
-
-.filter-button.favorites.active {
-  background-color: #dc3545; /* Red */
-}
-
-.filter-button.flag.active {
-  background-color: #007bff; /* Blue */
-}
-
-.filter-button:hover {
-  background-color: #e0e0e0; /* Slightly darker for hover */
-}
-
 .travels-content {
-  display: flex;
-  flex-wrap: wrap;
+    min-height: 100vh;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+    grid-template-areas: "list map";
+    gap: 1rem;
 }
 
 .travels-list {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
+    grid-area: list;
+}
+
+.travels-map {
+    grid-area: map;
 }

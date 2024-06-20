@@ -1,4 +1,3 @@
-import "./Map.css";
 import React, { useEffect, useRef } from "react";
 
 const Map = ({ markers = [] }) => {
@@ -39,7 +38,7 @@ const Map = ({ markers = [] }) => {
 
     return (
         <div
-            style={{ height: "600px", width: "400px" }}
+            style={{ height: "100%" }}
             id="myMap"
             className="map-container"
         ></div>

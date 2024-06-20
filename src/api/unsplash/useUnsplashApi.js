@@ -2,8 +2,6 @@ export function useUnsplashApi() {
     const baseUrl = "https://api.unsplash.com";
     const headers = {
         Authorization: `Client-ID ${process.env.REACT_APP_UNSPLASH_KEY}`,
-        "X-Per-Page": 10,
-        "X-Total": 10,
     };
 
     async function getPhotos(query) {
@@ -19,5 +17,17 @@ export function useUnsplashApi() {
         }
     }
 
-    return { getPhotos };
+    async function getPhoto(location) {
+        try {
+            const url = `${baseUrl}/search/photos?page=1&per_page=1&query=${location}`;
+            const response = await fetch(url, { headers });
+            const { results = [] } = await response.json();
+            return results.at(0).urls.thumb;
+        } catch (error) {
+            console.error(error.message);
+            throw new Error(error);
+        }
+    }
+
+    return { getPhotos, getPhoto };
 }

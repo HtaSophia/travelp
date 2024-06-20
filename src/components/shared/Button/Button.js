@@ -13,12 +13,23 @@ function Button(props) {
         children,
         type = "button",
         color = "primary-custom",
+        backgroundColor = "",
+        tooltipText = "",
+        isActive = false,
         onClick = () => {},
     } = props;
 
     return (
-        <button type={type} className={`btn btn-${color}`} onClick={onClick}>
+        <button
+            type={type}
+            className={`btn ${
+                color && !backgroundColor ? `btn-${color}` : ""
+            } ${isActive ? "active" : ""}`}
+            style={{ backgroundColor }}
+            onClick={onClick}
+        >
             {children}
+            {tooltipText && <span className="tooltip-text">{tooltipText}</span>}
         </button>
     );
 }
